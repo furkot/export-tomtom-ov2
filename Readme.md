@@ -4,7 +4,7 @@
 
 # furkot-tomtom-ov2
 
-Generate TomTom OV2 files from Furkot trip data.
+Generate TomTom OV2 files from [Furkot] trip data.
 
 ## Install
 
@@ -23,6 +23,8 @@ ov2(trip);
 ## License
 
 MIT © [code42day](https://code42day.com)
+
+[Furkot]: https://trips.furkot.com
 
 [npm-image]: https://img.shields.io/npm/v/furkot-tomtom-ov2.svg
 [npm-url]: https://npmjs.org/package/furkot-tomtom-ov2
