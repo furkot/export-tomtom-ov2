@@ -19,7 +19,9 @@
     "TomTom",
     "OV2"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "diacritics": "^1.2.1"
+  },
   "devDependencies": {
     "jshint": "^2.7.0",
     "mocha": "^2.2.4",
