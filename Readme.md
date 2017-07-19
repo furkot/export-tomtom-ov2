@@ -17,7 +17,7 @@ $ npm install --save furkot-tomtom-ov2
 ```js
 var ov2 = require('furkot-tomtom-ov2');
 
-ov2(trip);
+ov2(ostream, trip);
 ```
 
 ## License
