@@ -1,4 +1,10 @@
 
+1.0.0 / 2017-07-19
+==================
+
+ * switch to streaming interace
+ * upgrade mocha and should
+
 0.1.0 / 2015-05-13
 ==================
 

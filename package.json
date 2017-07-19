@@ -1,6 +1,6 @@
 {
   "name": "furkot-tomtom-ov2",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Generate TomTom OV2 files from Furkot trip data.",
   "homepage": "https://trips.furkot.com",
   "author": {
