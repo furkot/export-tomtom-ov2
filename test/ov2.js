@@ -10,10 +10,14 @@ function loadFile(file) {
   return fs.readFileSync(filename);
 }
 
-function generateOV2(t) {
+function generateOV2(t, fn) {
   var ostream = new WritableStreamBuffer();
   ov2(ostream, t);
-  return ostream.getContents();
+  ostream
+  .on('error', fn)
+  .on('finish', function () {
+    fn(null, ostream.getContents());
+  });
 }
 
 /**
@@ -27,20 +31,26 @@ function compareOV2(actual, expected) {
   }
 }
 
-describe('furkot-tomtom-ov2 node module', function () {
+describe('furkot-tomtom-ov2 node module', function (done) {
   it('simple trip', function() {
     var t = require('./fixtures/simple-trip.json'),
-      generated = generateOV2(t),
       expected = loadFile('./fixtures/simple.ov2');
 
-    compareOV2(generated, expected);
+    generateOV2(t, function(err, generated) {
+      compareOV2(generated, expected);
+      done(err);
+    });
+
   });
 
-  it('multi trip', function() {
+  it('multi trip', function (done) {
     var t = require('./fixtures/multi-trip.json'),
-      generated = generateOV2(t),
       expected = loadFile('./fixtures/multi.ov2');
 
-    compareOV2(generated, expected);
+    generateOV2(t, function(err, generated) {
+      compareOV2(generated, expected);
+      done(err);
+    });
+
   });
 });
