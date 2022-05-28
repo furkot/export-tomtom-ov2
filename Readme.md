@@ -15,9 +15,11 @@ $ npm install --save furkot-tomtom-ov2
 ## Usage
 
 ```js
-var ov2 = require('furkot-tomtom-ov2');
+const ov2 = require('furkot-tomtom-ov2');
 
-ov2(ostream, trip);
+for(const buffer of ov2(trip)) {
+  // buffer is ArrayBuffer to be streamed/processed
+}
 ```
 
 ## License

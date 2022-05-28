@@ -1,56 +1,52 @@
-var fs = require('fs');
-var path = require('path');
+const { readFileSync } = require('fs');
+const path = require('path');
 
-var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
-
-var ov2 = require('../');
+const ov2 = require('../');
 
 function loadFile(file) {
-  var filename = path.resolve(__dirname, file);
-  return fs.readFileSync(filename);
+  const filename = path.resolve(__dirname, file);
+  return readFileSync(filename);
 }
 
-function generateOV2(t, fn) {
-  var ostream = new WritableStreamBuffer();
-  ov2(ostream, t);
-  ostream
-  .on('error', fn)
-  .on('finish', function () {
-    fn(null, ostream.getContents());
-  });
+function generateOV2(t) {
+  let result = new Uint16Array(0);
+  for (const buffer of ov2(t)) {
+    let b = new Uint8Array(buffer);
+    let len = result.length + b.length;
+    let r = new Uint8Array(len);
+    r.set(result, 0);
+    r.set(b, result.length);
+    result = r;
+  }
+  return result;
 }
 
 /**
  * Compare buffers
  */
 function compareOV2(actual, expected) {
-  var i;
   actual.should.have.length(expected.length);
-  for(i = 0; i < actual.length; i += 1) {
-    actual.readUInt8(i).should.eql(expected.readUInt8(i));
+  for (let i = 0; i < actual.length; i += 1) {
+    actual[i].should.eql(expected.readUInt8(i), `byte at ${i}`);
   }
 }
 
-describe('furkot-tomtom-ov2 node module', function (done) {
-  it('simple trip', function() {
-    var t = require('./fixtures/simple-trip.json'),
-      expected = loadFile('./fixtures/simple.ov2');
+describe('furkot-tomtom-ov2 node module', function () {
+  it('simple trip', function () {
+    const t = require('./fixtures/simple-trip.json');
 
-    generateOV2(t, function(err, generated) {
-      compareOV2(generated, expected);
-      done(err);
-    });
+    const expected = loadFile('./fixtures/simple.ov2');
+    const generated = generateOV2(t);
 
+    compareOV2(generated, expected);
   });
 
-  it('multi trip', function (done) {
-    var t = require('./fixtures/multi-trip.json'),
-      expected = loadFile('./fixtures/multi.ov2');
+  it('multi trip', function () {
+    const t = require('./fixtures/multi-trip.json');
 
-    generateOV2(t, function(err, generated) {
-      compareOV2(generated, expected);
-      done(err);
-    });
+    const expected = loadFile('./fixtures/multi.ov2');
+    const generated = generateOV2(t);
 
+    compareOV2(generated, expected);
   });
 });
