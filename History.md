@@ -1,4 +1,10 @@
 
+2.0.0 / 2022-06-02
+==================
+
+ * rename project to @furkot/export-tomtom-ov2
+ * reimplement as generator
+
 1.0.1 / 2017-09-02
 ==================
 
