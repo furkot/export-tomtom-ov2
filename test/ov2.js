@@ -1,12 +1,11 @@
-const test = require('node:test');
-const assert = require('node:assert/strict');
-const { readFileSync } = require('node:fs');
-const path = require('node:path');
-
-const ov2 = require('../');
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import test from 'node:test';
+import ov2 from '../lib/ov2.js';
 
 function loadFile(file) {
-  const filename = path.resolve(__dirname, file);
+  const filename = path.resolve(import.meta.dirname, file);
   return readFileSync(filename);
 }
 
